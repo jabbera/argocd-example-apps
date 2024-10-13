@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guestbook-ui
+  annotations:
+    cert-manager.io/cluster-issuer: ca-issuer
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: guestbook-ui
+            port:
+              name: http
+    host: guestbook.jupyterhubdev.gmo.tld
+  tls:
+  - hosts:
+    - guestbook.jupyterhubdev.gmo.tld
+    secretName: tlscert
